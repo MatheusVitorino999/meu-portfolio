@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matheus Vitorino - Portfólio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        .foto {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #302b63;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        h1 {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+        h2 {
+            font-size: 16px;
+            font-weight: 400;
+            color: #a0a0c0;
+            margin-bottom: 20px;
+        }
+        .links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .projeto {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 10px 0;
+            text-align: left;
+        }
+        .projeto h3 {
+            margin-bottom: 8px;
+            color: #c0c0ff;
+        }
+        .projeto p {
+            color: #a0a0c0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="foto">👨‍💻</div>
+        <h1>Matheus Vitorino</h1>
+        <h2>Estudante de Ciência da Computação | Em busca de estágio</h2>
+
+        <div class="links">
+            <a href="https://github.com/MatheusVitorino999" target="_blank" class="btn">GitHub</a>
+            <a href="https://www.linkedin.com/in/matheus-vitorino-46b7ba2b0/" target="_blank" class="btn">LinkedIn</a>
+        </div>
+
+        <div class="projeto">
+            <h3>📌 Currículo Online</h3>
+            <p>Meu primeiro projeto web — esta página que você está vendo. Feita com HTML e CSS puro.</p>
+        </div>
+
+        <p style="margin-top: 20px; color: #a0a0c0; font-size: 13px;">🚀 Em construção — novos projetos em breve</p>
+    </div>
+</body>
+</html>
