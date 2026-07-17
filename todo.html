@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 5px;
+            font-size: 28px;
+        }
+        .subtitulo {
+            color: #a0a0c0;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        #input-tarefa {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+        #input-tarefa::placeholder {
+            color: #888;
+        }
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        #lista-tarefas {
+            list-style: none;
+            text-align: left;
+        }
+        .tarefa {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.2s;
+            word-break: break-word;
+        }
+        .tarefa:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .tarefa.concluida {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+        .btn-excluir {
+            background: rgba(255, 80, 80, 0.2);
+            border: 1px solid rgba(255, 80, 80, 0.3);
+            color: #ff6b6b;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.2s;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+        .btn-excluir:hover {
+            background: rgba(255, 80, 80, 0.4);
+        }
+        .vazio {
+            color: #a0a0c0;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+        .voltar {
+            margin-top: 25px;
+        }
+        .voltar a {
+            color: #a0a0c0;
+            text-decoration: none;
+            font-size: 13px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 18px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+        .voltar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>📝 Lista de Tarefas</h1>
+        <p class="subtitulo">Organize seu dia — clique na tarefa para concluir</p>
+
+        <div class="input-group">
+            <input type="text" id="input-tarefa" placeholder="Digite uma nova tarefa...">
+            <button class="btn" id="btn-adicionar">Adicionar</button>
+        </div>
+
+        <ul id="lista-tarefas"></ul>
+
+        <div class="voltar">
+            <a href="index.html">← Voltar ao Portfólio</a>
+        </div>
+    </div>
+
+    <script>
+        // Pega os elementos do HTML
+        const input = document.getElementById("input-tarefa");
+        const btnAdicionar = document.getElementById("btn-adicionar");
+        const lista = document.getElementById("lista-tarefas");
+
+        // Carrega tarefas salvas (ou array vazio se não tiver nada)
+        let tarefas = JSON.parse(localStorage.getItem("tarefas")) || [];
+
+        // Função para salvar no localStorage
+        function salvar() {
+            localStorage.setItem("tarefas", JSON.stringify(tarefas));
+        }
+
+        // Função para renderizar a lista na tela
+        function renderizar() {
+            lista.innerHTML = "";
+
+            if (tarefas.length === 0) {
+                lista.innerHTML = '<p class="vazio">Nenhuma tarefa ainda. Adicione uma acima!</p>';
+                return;
+            }
+
+            tarefas.forEach(function (tarefa, indice) {
+                // Cria o item da lista
+                const li = document.createElement("li");
+                li.classList.add("tarefa");
+                if (tarefa.concluida) {
+                    li.classList.add("concluida");
+                }
+
+                // Texto da tarefa
+                const texto = document.createElement("span");
+                texto.textContent = tarefa.texto;
+                li.appendChild(texto);
+
+                // Botão de excluir
+                const btnExcluir = document.createElement("button");
+                btnExcluir.textContent = "✕";
+                btnExcluir.classList.add("btn-excluir");
+                btnExcluir.addEventListener("click", function (e) {
+                    e.stopPropagation(); // impede de marcar como concluída ao excluir
+                    tarefas.splice(indice, 1);
+                    salvar();
+                    renderizar();
+                });
+                li.appendChild(btnExcluir);
+
+                // Clique no item = marcar como concluída
+                li.addEventListener("click", function () {
+                    tarefas[indice].concluida = !tarefas[indice].concluida;
+                    salvar();
+                    renderizar();
+                });
+
+                lista.appendChild(li);
+            });
+        }
+
+        // Função para adicionar nova tarefa
+        function adicionar() {
+            const texto = input.value.trim();
+            if (texto === "") return; // não adiciona vazio
+
+            tarefas.push({ texto: texto, concluida: false });
+            input.value = "";
+            salvar();
+            renderizar();
+        }
+
+        // Eventos
+        btnAdicionar.addEventListener("click", adicionar);
+        input.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                adicionar();
+            }
+        });
+
+        // Renderiza ao carregar a página
+        renderizar();
+    </script>
+</body>
+</html>
