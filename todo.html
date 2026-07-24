@@ -142,6 +142,7 @@
         <div class="input-group">
             <input type="text" id="input-tarefa" placeholder="Digite uma nova tarefa...">
             <button class="btn" id="btn-adicionar">Adicionar</button>
+            <button class="btn" id="btn-limpar">🗑️ Limpar todas</button>
         </div>
 
         <ul id="lista-tarefas"></ul>
@@ -156,6 +157,7 @@
         const input = document.getElementById("input-tarefa");
         const btnAdicionar = document.getElementById("btn-adicionar");
         const lista = document.getElementById("lista-tarefas");
+        const btnLimpar= document.getElementById("btn-limpar")
 
         // Carrega tarefas salvas (ou array vazio se não tiver nada)
         let tarefas = JSON.parse(localStorage.getItem("tarefas")) || [];
@@ -230,7 +232,11 @@
         });
 
         // Renderiza ao carregar a página
+        btnLimpar.addEventListener("click", function() {
+            tarefas = [];
+            salvar();
         renderizar();
+        });
     </script>
 </body>
 </html>
