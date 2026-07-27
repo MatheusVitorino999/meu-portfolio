@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senhas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 450px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .subtitulo {
+            color: #a0a0c0;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .senha-gerada {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 22px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            word-break: break-all;
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00ff88;
+        }
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .btn-copiar {
+            background: rgba(0, 255, 136, 0.15);
+            border-color: rgba(0, 255, 136, 0.3);
+            color: #00ff88;
+        }
+        .config {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .config label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 10px 0;
+            font-size: 14px;
+            cursor: pointer;
+            color: #d0d0e0;
+        }
+        .config input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #00ff88;
+        }
+        .tamanho {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .tamanho span {
+            color: #00ff88;
+            font-weight: bold;
+            min-width: 24px;
+            text-align: center;
+        }
+        input[type="range"] {
+            flex: 1;
+            accent-color: #00ff88;
+        }
+        .voltar {
+            margin-top: 25px;
+        }
+        .voltar a {
+            color: #a0a0c0;
+            text-decoration: none;
+            font-size: 13px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 18px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+        .voltar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🔐 Gerador de Senhas</h1>
+        <p class="subtitulo">Senhas seguras com um clique</p>
+
+        <div class="senha-gerada" id="senha">Clique em "Gerar"</div>
+
+        <button class="btn" id="btn-gerar">🎲 Gerar Senha</button>
+        <button class="btn btn-copiar" id="btn-copiar">📋 Copiar</button>
+
+        <div class="config">
+            <div class="tamanho">
+                <label>Tamanho:</label>
+                <input type="range" id="tamanho" min="8" max="20" value="12">
+                <span id="valor-tamanho">12</span>
+            </div>
+
+            <label><input type="checkbox" id="maiusculas" checked> Incluir letras maiúsculas</label>
+            <label><input type="checkbox" id="numeros" checked> Incluir números</label>
+            <label><input type="checkbox" id="simbolos" checked> Incluir símbolos (@, #, !, etc)</label>
+        </div>
+
+        <div class="voltar">
+            <a href="index.html">← Voltar ao Portfólio</a>
+        </div>
+    </div>
+
+    <script>
+    
+        const senhaEl = document.getElementById("senha");
+        const btnGerar = document.getElementById("btn-gerar");
+        const btnCopiar = document.getElementById("btn-copiar");
+        const tamanhoEl = document.getElementById("tamanho");
+        const valorTamanho = document.getElementById("valor-tamanho");
+        const maiusculasEl = document.getElementById("maiusculas");
+        const numerosEl = document.getElementById("numeros");
+        const simbolosEl = document.getElementById("simbolos");
+
+        tamanhoEl.addEventListener("input", function () {
+            valorTamanho.textContent = tamanhoEl.value;
+        });
+
+        function gerarSenha() {
+            let caracteres = "abcdefghijklmnopqrstuvwxyz";
+
+            if (maiusculasEl.checked) {
+                caracteres += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            }
+            if (numerosEl.checked) {
+                caracteres += "0123456789";
+            }
+            if (simbolosEl.checked) {
+                caracteres += "!@#$%&*";
+            }
+
+            let senha = "";
+            const tamanho = parseInt(tamanhoEl.value);
+
+            for (let i = 0; i < tamanho; i++) {
+                const aleatorio = Math.floor(Math.random() * caracteres.length);
+                senha += caracteres[aleatorio];
+            }
+
+            senhaEl.textContent = senha;
+        }
+
+        btnGerar.addEventListener("click", gerarSenha);
+        btnCopiar.addEventListener("click", function () {
+    navigator.clipboard.writeText(senhaEl.textContent);
+    alert("Senha copiada!");
+});
+    </script>
+
+    </script>
+</body>
+</html>
