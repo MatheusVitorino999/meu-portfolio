@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            margin: 8px 0;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+        input::placeholder {
+            color: #888;
+        }
+        .btn {
+            width: 100%;
+            background: rgba(0, 255, 136, 0.15);
+            color: #00ff88;
+            padding: 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: rgba(0, 255, 136, 0.25);
+        }
+        .erro {
+            color: #ff6b6b;
+            font-size: 12px;
+            text-align: left;
+            margin-top: 2px;
+            display: none;
+        }
+        .erro.visivel {
+            display: block;
+        }
+        .sucesso {
+            color: #00ff88;
+            margin-top: 15px;
+            display: none;
+        }
+        .sucesso.visivel {
+            display: block;
+        }
+        .voltar {
+            margin-top: 25px;
+        }
+        .voltar a {
+            color: #a0a0c0;
+            text-decoration: none;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🔐 Login</h1>
+
+        <input type="email" id="email" placeholder="Email">
+        <p class="erro" id="erro-email">Email inválido — precisa ter @ e .com</p>
+
+        <input type="password" id="senha" placeholder="Senha">
+        <p class="erro" id="erro-senha">Senha precisa ter pelo menos 6 caracteres</p>
+
+        <button class="btn" id="btn-entrar">Entrar</button>
+        <p class="sucesso" id="sucesso">✅ Login bem-sucedido!</p>
+
+        <div class="voltar">
+            <a href="index.html">← Voltar ao Portfólio</a>
+        </div>
+    </div>
+
+    <script>
+        const emailEl = document.getElementById("email");
+        const senhaEl = document.getElementById("senha");
+        const btnEntrar = document.getElementById("btn-entrar");
+        const erroSenha = document.getElementById("erro-senha");
+        const erroEmail = document.getElementById("erro-email");
+        const sucesso = document.getElementById("sucesso");
+        function validar() {
+    const email = emailEl.value;
+    const senha = senhaEl.value;
+    let valido = true;
+
+    // Esconde os erros primeiro
+    erroEmail.classList.remove("visivel");
+    erroSenha.classList.remove("visivel");
+    sucesso.classList.remove("visivel");
+
+    // Validar email
+    if (!email.includes("@") || !email.includes(".com")) {
+        erroEmail.classList.add("visivel");
+        valido = false;
+    }
+    if (senha.length < 6) {
+        erroSenha.classList.add("visivel");
+        valido=false;
+    }
+    if (valido) {
+        sucesso.classList.add("visivel");
+    }
+}
+        btnEntrar.addEventListener("click", validar);
+
+    </script>
+</body>
+</html>
